@@ -19,6 +19,7 @@ struct Constants {
 
 class ToDoListViewController: UITableViewController {
     
+    @IBOutlet var serachBar: UISearchBar!
     lazy var itemArray = [ItemsEntity]()
     lazy var defaults = UserDefaults.standard
 //    lazy var itemsList = Items() //documentDirectory
@@ -66,14 +67,14 @@ class ToDoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    private func fetchDataFromCoreData() {
+    private func fetchDataFromCoreData(with request:NSFetchRequest<ItemsEntity> = ItemsEntity.fetchRequest()) {
         guard let managedObjectContext = context else{return}
-        let request: NSFetchRequest<ItemsEntity> = ItemsEntity.fetchRequest()
         do {
             itemArray = try managedObjectContext.fetch(request)
         } catch {
              debugPrint("context Fetch error \(error)")
         }
+        tableView.reloadData()
     }
     
     //MARK: - Saving And Loading Data using documentDirtectory -
@@ -120,6 +121,30 @@ extension ToDoListViewController {
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         saveDataToCoreData()
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+//MARK: -SerachBar Delegate Methods -
+extension ToDoListViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        let request: NSFetchRequest<ItemsEntity> = ItemsEntity.fetchRequest()
+        /*Title is attribute name in Coredata,
+         Contains is the keyword,[cd] for ignoring case sensitivity,
+        %@ is to look for any text*/
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
+        request.predicate = predicate
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        fetchDataFromCoreData(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            fetchDataFromCoreData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
     }
 }
 

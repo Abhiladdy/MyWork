@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+/*This is Data Model useful to store data in document directory*/
 struct Items: Codable {
     var title = ""
     var done = false
