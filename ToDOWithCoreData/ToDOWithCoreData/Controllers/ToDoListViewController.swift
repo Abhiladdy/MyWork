@@ -78,7 +78,10 @@ class ToDoListViewController: UITableViewController {
                     let newItemList = ItemsDataModel()
                     newItemList.title = newItemTitle
                     newItemList.isSelected = false
-                    currentCategory.itemsRelation.append(newItemList)
+                    newItemList.dateCreated = Date()
+                    if !newItemTitle.isEmpty {
+                        currentCategory.itemsRelation.append(newItemList)
+                    }
                 }
             } catch {
                 debugPrint("Items write error \(error)")
@@ -174,6 +177,9 @@ extension ToDoListViewController {
 extension ToDoListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
+        itemsFromRealm = itemsFromRealm?.filter("title CONTAINS[cd] %@", searchText).sorted(byKeyPath: "dateCreated", ascending: true)
+        tableView.reloadData()
+        /* Uncomment Below code to use core data
         let request: NSFetchRequest<ItemsEntity> = ItemsEntity.fetchRequest()
         /*Title is attribute name in Coredata,
          Contains is the keyword,[cd] for ignoring case sensitivity,
@@ -181,12 +187,14 @@ extension ToDoListViewController: UISearchBarDelegate {
         let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchText)
         request.predicate = predicate
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
-        fetchDataFromCoreData(with: request)
+        fetchDataFromCoreData(with: request)*/
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text?.count == 0 {
-            fetchDataFromCoreData()
+            fetchDataFromRealm()
+            /* Uncomment Below code to fetch data from core data
+            fetchDataFromCoreData()*/
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()
             }

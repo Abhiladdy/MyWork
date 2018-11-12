@@ -12,5 +12,6 @@ import RealmSwift
 final class ItemsDataModel: Object {
     @objc dynamic var title = ""
     @objc dynamic var isSelected = false
+    @objc dynamic var dateCreated: Date?
     var parentRelation = LinkingObjects(fromType: CategoryDataModel.self, property: "itemsRelation")
 }
