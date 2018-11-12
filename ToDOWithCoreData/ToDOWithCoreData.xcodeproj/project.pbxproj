@@ -10,6 +10,10 @@
 		34A602782199176500FBD751 /* CategoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A602772199176500FBD751 /* CategoryTableViewController.swift */; };
 		34A6027A2199181400FBD751 /* Contants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A602792199181400FBD751 /* Contants.swift */; };
 		34DCA98E219922BB005BF7DC /* CommonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DCA98D219922BB005BF7DC /* CommonExtensions.swift */; };
+		34DCA99B2199D19B005BF7DC /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA9992199D19B005BF7DC /* Realm.framework */; };
+		34DCA99C2199D19B005BF7DC /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA9992199D19B005BF7DC /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34DCA99D2199D19B005BF7DC /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA99A2199D19B005BF7DC /* RealmSwift.framework */; };
+		34DCA99E2199D19B005BF7DC /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA99A2199D19B005BF7DC /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C4F217A219782B000C9E351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F2179219782B000C9E351 /* AppDelegate.swift */; };
 		8C4F217C219782B000C9E351 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F217B219782B000C9E351 /* ToDoListViewController.swift */; };
 		8C4F217F219782B000C9E351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C4F217D219782B000C9E351 /* Main.storyboard */; };
@@ -19,10 +23,29 @@
 		8C84C04D21986D8C002D51A2 /* MyDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8C84C04B21986D8C002D51A2 /* MyDataModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		34DCA99F2199D19B005BF7DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				34DCA99E2199D19B005BF7DC /* RealmSwift.framework in Embed Frameworks */,
+				34DCA99C2199D19B005BF7DC /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		34A602772199176500FBD751 /* CategoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryTableViewController.swift; sourceTree = "<group>"; };
 		34A602792199181400FBD751 /* Contants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contants.swift; sourceTree = "<group>"; };
 		34DCA98D219922BB005BF7DC /* CommonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonExtensions.swift; sourceTree = "<group>"; };
+		34DCA9902199D145005BF7DC /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../Downloads/realm-swift-3.11.1/ios/swift-4.2/RealmSwift.framework"; sourceTree = "<group>"; };
+		34DCA9912199D145005BF7DC /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Downloads/realm-swift-3.11.1/ios/swift-4.2/Realm.framework"; sourceTree = "<group>"; };
+		34DCA9992199D19B005BF7DC /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		34DCA99A2199D19B005BF7DC /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		8C4F2176219782B000C9E351 /* ToDOWithCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDOWithCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C4F2179219782B000C9E351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C4F217B219782B000C9E351 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +62,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34DCA99D2199D19B005BF7DC /* RealmSwift.framework in Frameworks */,
+				34DCA99B2199D19B005BF7DC /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,11 +79,23 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		34DCA98F2199D145005BF7DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				34DCA9912199D145005BF7DC /* Realm.framework */,
+				34DCA9902199D145005BF7DC /* RealmSwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8C4F216D219782B000C9E351 = {
 			isa = PBXGroup;
 			children = (
+				34DCA9992199D19B005BF7DC /* Realm.framework */,
+				34DCA99A2199D19B005BF7DC /* RealmSwift.framework */,
 				8C4F2178219782B000C9E351 /* ToDOWithCoreData */,
 				8C4F2177219782B000C9E351 /* Products */,
+				34DCA98F2199D145005BF7DC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -121,6 +158,7 @@
 				8C4F2172219782B000C9E351 /* Sources */,
 				8C4F2173219782B000C9E351 /* Frameworks */,
 				8C4F2174219782B000C9E351 /* Resources */,
+				34DCA99F2199D19B005BF7DC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -332,6 +370,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ToDOWithCoreData/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Citi.ToDOWithCoreData;
@@ -346,6 +388,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = ToDOWithCoreData/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Citi.ToDOWithCoreData;
