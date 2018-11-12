@@ -3,7 +3,7 @@
 //  ToDOWithCoreData
 //
 //  Created by Jain, Abhilash Reddy [GCB-OT] on 11/10/18.
-//  Copyright © 2018 Citi. All rights reserved.
+//  Copyright  All rights reserved.
 //
 
 import UIKit
