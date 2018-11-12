@@ -14,6 +14,8 @@
 		34DCA99C2199D19B005BF7DC /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA9992199D19B005BF7DC /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34DCA99D2199D19B005BF7DC /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA99A2199D19B005BF7DC /* RealmSwift.framework */; };
 		34DCA99E2199D19B005BF7DC /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA99A2199D19B005BF7DC /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34DCA9A12199D5A2005BF7DC /* CategoryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DCA9A02199D5A2005BF7DC /* CategoryDataModel.swift */; };
+		34DCA9A32199E218005BF7DC /* ItemsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DCA9A22199E218005BF7DC /* ItemsDataModel.swift */; };
 		8C4F217A219782B000C9E351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F2179219782B000C9E351 /* AppDelegate.swift */; };
 		8C4F217C219782B000C9E351 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F217B219782B000C9E351 /* ToDoListViewController.swift */; };
 		8C4F217F219782B000C9E351 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C4F217D219782B000C9E351 /* Main.storyboard */; };
@@ -46,6 +48,8 @@
 		34DCA9912199D145005BF7DC /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Downloads/realm-swift-3.11.1/ios/swift-4.2/Realm.framework"; sourceTree = "<group>"; };
 		34DCA9992199D19B005BF7DC /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 		34DCA99A2199D19B005BF7DC /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		34DCA9A02199D5A2005BF7DC /* CategoryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDataModel.swift; sourceTree = "<group>"; };
+		34DCA9A22199E218005BF7DC /* ItemsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsDataModel.swift; sourceTree = "<group>"; };
 		8C4F2176219782B000C9E351 /* ToDOWithCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDOWithCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C4F2179219782B000C9E351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C4F217B219782B000C9E351 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 			children = (
 				8C4F218D2197B09500C9E351 /* ItemDetails.swift */,
 				8C84C04B21986D8C002D51A2 /* MyDataModel.xcdatamodeld */,
+				34DCA9A02199D5A2005BF7DC /* CategoryDataModel.swift */,
+				34DCA9A22199E218005BF7DC /* ItemsDataModel.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -225,9 +231,11 @@
 				8C4F218E2197B09500C9E351 /* ItemDetails.swift in Sources */,
 				8C84C04D21986D8C002D51A2 /* MyDataModel.xcdatamodeld in Sources */,
 				34A602782199176500FBD751 /* CategoryTableViewController.swift in Sources */,
+				34DCA9A12199D5A2005BF7DC /* CategoryDataModel.swift in Sources */,
 				8C4F217C219782B000C9E351 /* ToDoListViewController.swift in Sources */,
 				8C4F217A219782B000C9E351 /* AppDelegate.swift in Sources */,
 				34A6027A2199181400FBD751 /* Contants.swift in Sources */,
+				34DCA9A32199E218005BF7DC /* ItemsDataModel.swift in Sources */,
 				34DCA98E219922BB005BF7DC /* CommonExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

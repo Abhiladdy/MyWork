@@ -8,24 +8,38 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class ToDoListViewController: UITableViewController {
     
     @IBOutlet var serachBar: UISearchBar!
     lazy var itemArray = [ItemsEntity]()
     lazy var defaults = UserDefaults.standard
+    let realm = try! Realm()
+    var itemsFromRealm: Results<ItemsDataModel>?
     //    lazy var itemsList = Items() //documentDirectory
     let defaultDirectoryPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(Constants.itemsPlist)
     let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
+    
+    // Selected CategoryValue from CoreData
     var selectedCategory: CategoryEntity? {
         didSet {
             fetchDataFromCoreData()
         }
     }
     
+    // Selected CategoryValue from Realm
+    var selectedCategoryFromRealm: CategoryDataModel? {
+        didSet {
+            fetchDataFromRealm()
+        }
+    }
+    
     //MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.tableFooterView = UIView()
+        fetchDataFromRealm()
     }
     
     //MARK: - Bar Button Action -
@@ -33,15 +47,10 @@ class ToDoListViewController: UITableViewController {
         var myTextField = UITextField()
         let alert = UIAlertController(title: Constants.itemsAlertControllerTitle, message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: Constants.itemsAlertActionTitle, style: .default) {[weak self] (action) in
-            guard let newItem = myTextField.text else{return}
-            //            self?.itemsList.title = newItem this line is used for documentDirectory
-            guard let managedObjectContext = self?.context else{return}
-            let itemList = ItemsEntity(context: managedObjectContext)
-            itemList.parentRelation = self?.selectedCategory
-            itemList.title = newItem
-            itemList.done = false
-            self?.itemArray.append(itemList)
-            self?.saveDataToCoreData(managedObjectContext)
+            guard let newItemTitle = myTextField.text else{return}
+            //  self?.itemsList.title = newItem this line is used for documentDirectory
+            //  self?.setValuesForDataSource(newItem) CoreData setup
+            self?.setValuesForRealm(newItemTitle)
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = Constants.itemsTextFieldPlaceHolder
@@ -49,6 +58,33 @@ class ToDoListViewController: UITableViewController {
         }
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: - Writing Data-
+    private func setValuesForDataSource(_ newItemTitle: String) {
+        guard let managedObjectContext = context else{return}
+        let itemList = ItemsEntity(context: managedObjectContext)
+        itemList.parentRelation = selectedCategory
+        itemList.title = newItemTitle
+        itemList.done = false
+        itemArray.append(itemList)
+        saveDataToCoreData(managedObjectContext)
+    }
+    
+    private func setValuesForRealm(_ newItemTitle: String) {
+        if let currentCategory = selectedCategoryFromRealm {
+            do {
+                try realm.write {
+                    let newItemList = ItemsDataModel()
+                    newItemList.title = newItemTitle
+                    newItemList.isSelected = false
+                    currentCategory.itemsRelation.append(newItemList)
+                }
+            } catch {
+                debugPrint("Items write error \(error)")
+            }
+            tableView.reloadData()
+        }
     }
     
     //MARK: - Loading Data using CoreData -
@@ -69,8 +105,14 @@ class ToDoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    private func fetchDataFromRealm() {
+        itemsFromRealm = selectedCategoryFromRealm?.itemsRelation.sorted(byKeyPath: "title", ascending: true)
+        tableView.reloadData()
+    }
+    
     //MARK: - Saving And Loading Data using documentDirtectory -
-    /* private func saveToDoListData() {
+     // UnComment below code to use document directory to store data
+     /*private func saveToDoListData() {
      let plistEncoder = PropertyListEncoder()
      do {
      let dataToSave = try plistEncoder.encode(itemArray)
@@ -99,20 +141,31 @@ class ToDoListViewController: UITableViewController {
 extension ToDoListViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemArray.count
+        return itemsFromRealm?.count ?? 2
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.toDoListCellIdentifier, for: indexPath)
-        cell.textLabel?.text = itemArray[indexPath.row].title
-        cell.accessoryType = itemArray[indexPath.row].done ? .checkmark : .none
+        cell.textLabel?.text = itemsFromRealm?[indexPath.row].title ?? Constants.itemsListEmpty
+        cell.accessoryType = itemsFromRealm?[indexPath.row].isSelected ?? false ? .checkmark : .none
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        guard let managedContext = context else{return}
-        saveDataToCoreData(managedContext)
+        //Below lines are used to update checkmark in Realm DB
+        if let itemList = itemsFromRealm?[indexPath.row] {
+            do {
+                try realm.write {
+                    itemList.isSelected = !itemList.isSelected
+                }
+            } catch {
+                debugPrint("Checkmark update error \(error)")
+            }
+        }
+        //UnComment below lines to use coreData
+       /* guard let managedContext = context else{return}
+        saveDataToCoreData(managedContext)*/
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

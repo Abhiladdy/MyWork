@@ -17,4 +17,6 @@ struct Constants {
     static let categoryListCellIdentifier = "categoryListCell"
     static let categoryTextFieldPlaceHolder = "Enter New Category Name"
     static let itemListVcIdentifier = "goToItemsList"
+    static let categoryListEmpty = "There are no categories to show"
+    static let itemsListEmpty = "There are no related items to show"
 }

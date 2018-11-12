@@ -8,16 +8,20 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 class CategoryTableViewController: UITableViewController {
     
     lazy var categoryList = [CategoryEntity]()
+    let realm = try! Realm()
+    var categoriesFromRealm: Results<CategoryDataModel>?
     let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
-        fetchDataFromCoreData()
+        //fetchDataFromCoreData() //Fetching Data from Core Data
+        fetchDataFromRealmDB()
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -25,20 +29,43 @@ class CategoryTableViewController: UITableViewController {
         let alertView = UIAlertController(title: Constants.itemsAlertControllerTitle, message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: Constants.itemsAlertActionTitle, style: .default) { [weak self](action) in
             guard let newCategory = categoryTextField.text else{return}
-            guard let managedContext = self?.context else{return}
-            let newCategoryList = CategoryEntity(context: managedContext)
-            self?.categoryList.append(newCategoryList)
-            newCategoryList.categoryName = newCategory
-            self?.saveDataToCoreData(managedContext)
+//            self?.setValuesForDataSource(newCategory) //From CoreData
+            self?.setValuesForRealm(newCategory)
         }
-        
         alertView.addTextField { (alertTextField) in
             categoryTextField.placeholder = Constants.categoryTextFieldPlaceHolder
             categoryTextField = alertTextField
         }
-        
         alertView.addAction(action)
         present(alertView, animated: true, completion: nil)
+    }
+    
+    //MARK: - Writing Data-
+    private func setValuesForDataSource(_ newCategory: String) {
+        guard let managedContext = context else{return}
+        let newCategoryList = CategoryEntity(context: managedContext)
+        categoryList.append(newCategoryList)
+        newCategoryList.categoryName = newCategory
+        saveDataToCoreData(managedContext)
+    }
+    
+    private func setValuesForRealm(_ newCategory: String) {
+        let newCategoryList = CategoryDataModel()
+        newCategoryList.categoryName = newCategory
+        saveDataToRealm(newCategoryList)
+    }
+    
+    //MARK: - Saving Data to Realm DB -
+    func saveDataToRealm(_ realmObject: Object) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.add(realmObject)
+            }
+        } catch {
+            debugPrint("Realm DB Write Error \(error)")
+        }
+        tableView.reloadData()
     }
     
     //MARK: - Fetch Data From Core Data -
@@ -53,6 +80,12 @@ class CategoryTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    //MARK: - Fetch Data From Realm -
+    private func fetchDataFromRealmDB() {
+        categoriesFromRealm = realm.objects(CategoryDataModel.self)
+        tableView.reloadData()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let backButton = UIBarButtonItem()
         backButton.title = ""
@@ -60,7 +93,9 @@ class CategoryTableViewController: UITableViewController {
         navigationItem.backBarButtonItem = backButton
         let todoListVC = segue.destination as? ToDoListViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            todoListVC?.selectedCategory = categoryList[indexPath.row]
+             //When Using CoreData
+            // todoListVC?.selectedCategory = categoryListEmpty?[indexPath.row]
+            todoListVC?.selectedCategoryFromRealm = categoriesFromRealm?[indexPath.row]
         }
     }
 }
@@ -73,13 +108,13 @@ extension CategoryTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categoryList.count
+        return categoriesFromRealm?.count ?? 1
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryListCellIdentifier, for: indexPath)
-        cell.textLabel?.text = categoryList[indexPath.row].categoryName
+        cell.textLabel?.text = categoriesFromRealm?[indexPath.row].categoryName ?? Constants.categoryListEmpty
         return cell
     }
     
