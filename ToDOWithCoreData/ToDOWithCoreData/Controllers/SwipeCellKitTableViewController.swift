@@ -14,6 +14,7 @@ class SwipeCellKitTableViewController: UITableViewController, SwipeTableViewCell
         super.viewDidLoad()
         tableView.tableFooterView = UIView()
         tableView.rowHeight = 90.0
+        tableView.separatorStyle = .none
     }
 
     // MARK: - Table view data source -

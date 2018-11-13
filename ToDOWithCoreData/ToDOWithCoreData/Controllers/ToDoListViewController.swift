@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import RealmSwift
+import ChameleonFramework
 
 class ToDoListViewController: SwipeCellKitTableViewController {
     
@@ -38,7 +39,30 @@ class ToDoListViewController: SwipeCellKitTableViewController {
     //MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let selectedCategoryName = selectedCategoryFromRealm?.categoryName {
+            title = selectedCategoryName
+        }
         fetchDataFromRealm()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let categoryHexColor = selectedCategoryFromRealm?.color  else {return}
+        updateNavBar(categoryHexColor)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        updateNavBar("002D72") // Original NavBar color
+    }
+    
+    private func updateNavBar(_ hexColor: String) {
+        guard let navBar =  navigationController?.navigationBar else {fatalError("Navigation Bar is nil")}
+        guard let navBarColor = UIColor(hexString: hexColor) else{return}
+        navBar.barTintColor = navBarColor
+        navBar.tintColor = ContrastColorOf(navBarColor, returnFlat: true)
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: ContrastColorOf(navBarColor, returnFlat: true)]
+        serachBar.barTintColor = navBarColor
     }
     
     //MARK: - Bar Button Action -
@@ -163,6 +187,11 @@ extension ToDoListViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = itemsFromRealm?[indexPath.row].title ?? Constants.itemsListEmpty
         cell.accessoryType = itemsFromRealm?[indexPath.row].isSelected ?? false ? .checkmark : .none
+        guard let items = itemsFromRealm else {return cell}
+        guard let selectedCategoryColorValue = selectedCategoryFromRealm?.color else {return cell}
+        cell.backgroundColor = UIColor(hexString: selectedCategoryColorValue)?.darken(byPercentage: CGFloat(indexPath.row)/CGFloat(items.count))
+//        cell.backgroundColor = FlatPowderBlue().darken(byPercentage: CGFloat(indexPath.row)/CGFloat(items.count))
+        cell.textLabel?.textColor = ContrastColorOf(cell.backgroundColor ?? UIColor.white, returnFlat: true)
         return cell
     }
     

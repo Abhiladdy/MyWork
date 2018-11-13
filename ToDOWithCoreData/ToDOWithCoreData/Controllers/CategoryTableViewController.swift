@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import RealmSwift
 import SwipeCellKit
+import ChameleonFramework
 
 class CategoryTableViewController: SwipeCellKitTableViewController {
     
@@ -53,6 +54,7 @@ class CategoryTableViewController: SwipeCellKitTableViewController {
     private func setValuesForRealm(_ newCategory: String) {
         let newCategoryList = CategoryDataModel()
         newCategoryList.categoryName = newCategory
+        newCategoryList.color = UIColor.randomFlat.hexValue()
         saveDataToRealm(newCategoryList)
     }
     
@@ -128,7 +130,11 @@ extension CategoryTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.textLabel?.text = categoriesFromRealm?[indexPath.row].categoryName ?? Constants.categoryListEmpty
+        if let category = categoriesFromRealm?[indexPath.row], let categoryHexValue = UIColor(hexString: category.color) {
+            cell.textLabel?.text = category.categoryName
+            cell.backgroundColor = categoryHexValue
+            cell.textLabel?.textColor = ContrastColorOf(categoryHexValue, returnFlat: true)
+        }
         return cell
     }
     

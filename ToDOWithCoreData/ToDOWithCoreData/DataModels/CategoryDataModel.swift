@@ -11,5 +11,6 @@ import RealmSwift
 /* Realm Table for CategoryList */
 final class CategoryDataModel: Object {
     @objc dynamic var categoryName = ""
+    @objc dynamic var color = ""
     let itemsRelation = List<ItemsDataModel>()
 }
