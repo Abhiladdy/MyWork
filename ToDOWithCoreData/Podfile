@@ -7,6 +7,6 @@ target 'ToDOWithCoreData' do
 
   # Pods for ToDOWithCoreData
 pod 'SwipeCellKit'
-pod 'ChameleonFramework/Swift'
+pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
 
 end
