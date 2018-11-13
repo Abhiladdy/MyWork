@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import RealmSwift
 
-class ToDoListViewController: UITableViewController {
+class ToDoListViewController: SwipeCellKitTableViewController {
     
     @IBOutlet var serachBar: UISearchBar!
     lazy var itemArray = [ItemsEntity]()
@@ -38,7 +38,6 @@ class ToDoListViewController: UITableViewController {
     //MARK: - View Lifecycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.tableFooterView = UIView()
         fetchDataFromRealm()
     }
     
@@ -113,6 +112,19 @@ class ToDoListViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    //MARK: - Deleting Data from Realm -
+    override func updateDataModel(at indexPath: IndexPath) {
+        if let rowToBeDeleted = itemsFromRealm?[indexPath.row] {
+            do {
+                try realm.write {
+                    realm.delete(rowToBeDeleted)
+                }
+            } catch {
+                debugPrint("Item data delete error \(error)")
+            }
+        }
+    }
+    
     //MARK: - Saving And Loading Data using documentDirtectory -
      // UnComment below code to use document directory to store data
      /*private func saveToDoListData() {
@@ -148,7 +160,7 @@ extension ToDoListViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.toDoListCellIdentifier, for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = itemsFromRealm?[indexPath.row].title ?? Constants.itemsListEmpty
         cell.accessoryType = itemsFromRealm?[indexPath.row].isSelected ?? false ? .checkmark : .none
         return cell

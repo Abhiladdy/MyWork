@@ -14,7 +14,7 @@ struct Constants {
     static let itemsAlertActionTitle = "Add Item"
     static let itemsTextFieldPlaceHolder = "Enter New Item Name"
     static let toDoListCellIdentifier = "toDoListCell"
-    static let categoryListCellIdentifier = "categoryListCell"
+    static let cellIdentifier = "SwipeKitCell"
     static let categoryTextFieldPlaceHolder = "Enter New Category Name"
     static let itemListVcIdentifier = "goToItemsList"
     static let categoryListEmpty = "There are no categories to show"

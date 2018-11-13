@@ -16,6 +16,7 @@
 		34DCA99E2199D19B005BF7DC /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 34DCA99A2199D19B005BF7DC /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		34DCA9A12199D5A2005BF7DC /* CategoryDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DCA9A02199D5A2005BF7DC /* CategoryDataModel.swift */; };
 		34DCA9A32199E218005BF7DC /* ItemsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DCA9A22199E218005BF7DC /* ItemsDataModel.swift */; };
+		34FD110C219A55A900C1F03B /* SwipeCellKitTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FD110B219A55A900C1F03B /* SwipeCellKitTableViewController.swift */; };
 		560A380EB485C5ABA10E9B34 /* Pods_ToDOWithCoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2B4BC5796A5B9BA84EC404D /* Pods_ToDOWithCoreData.framework */; };
 		8C4F217A219782B000C9E351 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F2179219782B000C9E351 /* AppDelegate.swift */; };
 		8C4F217C219782B000C9E351 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4F217B219782B000C9E351 /* ToDoListViewController.swift */; };
@@ -52,6 +53,7 @@
 		34DCA99A2199D19B005BF7DC /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		34DCA9A02199D5A2005BF7DC /* CategoryDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDataModel.swift; sourceTree = "<group>"; };
 		34DCA9A22199E218005BF7DC /* ItemsDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsDataModel.swift; sourceTree = "<group>"; };
+		34FD110B219A55A900C1F03B /* SwipeCellKitTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeCellKitTableViewController.swift; sourceTree = "<group>"; };
 		8C4F2176219782B000C9E351 /* ToDOWithCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDOWithCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C4F2179219782B000C9E351 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C4F217B219782B000C9E351 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				34A602772199176500FBD751 /* CategoryTableViewController.swift */,
 				8C4F217B219782B000C9E351 /* ToDoListViewController.swift */,
+				34FD110B219A55A900C1F03B /* SwipeCellKitTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				34A6027A2199181400FBD751 /* Contants.swift in Sources */,
 				34DCA9A32199E218005BF7DC /* ItemsDataModel.swift in Sources */,
 				34DCA98E219922BB005BF7DC /* CommonExtensions.swift in Sources */,
+				34FD110C219A55A900C1F03B /* SwipeCellKitTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

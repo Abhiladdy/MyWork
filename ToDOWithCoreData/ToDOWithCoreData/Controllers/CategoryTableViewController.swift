@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import RealmSwift
+import SwipeCellKit
 
-class CategoryTableViewController: UITableViewController {
+class CategoryTableViewController: SwipeCellKitTableViewController {
     
     lazy var categoryList = [CategoryEntity]()
     let realm = try! Realm()
@@ -93,9 +94,22 @@ class CategoryTableViewController: UITableViewController {
         navigationItem.backBarButtonItem = backButton
         let todoListVC = segue.destination as? ToDoListViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-             //When Using CoreData
+             //uncomment below when using CoreData
             // todoListVC?.selectedCategory = categoryListEmpty?[indexPath.row]
             todoListVC?.selectedCategoryFromRealm = categoriesFromRealm?[indexPath.row]
+        }
+    }
+    
+    //MARK: - Updating DataModel -
+    override func updateDataModel(at indexPath: IndexPath) {
+        if let rowTobeDeleted = categoriesFromRealm?[indexPath.row] {
+            do {
+                try realm.write {
+                    realm.delete(rowTobeDeleted)
+                }
+            } catch {
+                debugPrint("delete error \(error)")
+            }
         }
     }
 }
@@ -113,17 +127,13 @@ extension CategoryTableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryListCellIdentifier, for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = categoriesFromRealm?[indexPath.row].categoryName ?? Constants.categoryListEmpty
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Constants.itemListVcIdentifier, sender: self)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70.0;
     }
     
     //MARK: - work in progress colors -
