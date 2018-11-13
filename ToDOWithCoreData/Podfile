@@ -7,5 +7,6 @@ target 'ToDOWithCoreData' do
 
   # Pods for ToDOWithCoreData
 pod 'SwipeCellKit'
+pod 'ChameleonFramework/Swift'
 
 end

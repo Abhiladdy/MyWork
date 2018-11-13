@@ -105,7 +105,7 @@
 			children = (
 				34DCA9992199D19B005BF7DC /* Realm.framework */,
 				34DCA99A2199D19B005BF7DC /* RealmSwift.framework */,
-				8C4F2178219782B000C9E351 /* ToDOWithCoreData */,
+				8C4F2178219782B000C9E351 /* ToDoWithPersistent */,
 				8C4F2177219782B000C9E351 /* Products */,
 				34DCA98F2199D145005BF7DC /* Frameworks */,
 				A9168335BBCF9837EC2D84AE /* Pods */,
@@ -120,7 +120,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		8C4F2178219782B000C9E351 /* ToDOWithCoreData */ = {
+		8C4F2178219782B000C9E351 /* ToDoWithPersistent */ = {
 			isa = PBXGroup;
 			children = (
 				8C4F2179219782B000C9E351 /* AppDelegate.swift */,
@@ -132,7 +132,7 @@
 				8C4F2182219782B000C9E351 /* LaunchScreen.storyboard */,
 				8C4F2185219782B000C9E351 /* Info.plist */,
 			);
-			path = ToDOWithCoreData;
+			path = ToDoWithPersistent;
 			sourceTree = "<group>";
 		};
 		8C4F218B2197B03300C9E351 /* Controllers */ = {
@@ -276,12 +276,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ToDOWithCoreData/Pods-ToDOWithCoreData-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
